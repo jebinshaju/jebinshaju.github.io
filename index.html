@@ -1,13 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0; url=https://bento.me/jebinshaju">
-    <meta name="google-site-verification" content="DgTtapLgtBssfuCsodnXiuV4RLo7Ryrjq8Phut1Yp-A" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nee theernada</title>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .terminal-loader {
+        border: 0.1em solid #333;
+        background-color: #1a1a1a;
+        color: #0f0;
+        padding: 1.5em 1em;
+        width: 350px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .text {
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 0.2em solid green;
+        padding-right: 0.5em;
+        animation: typeAndDelete 4s steps(30) infinite, blinkCursor 0.75s step-end infinite alternate;
+    }
+
+    @keyframes blinkCursor {
+        from { border-right-color: green; }
+        to { border-right-color: transparent; }
+    }
+
+    @keyframes typeAndDelete {
+        0%, 10% {
+            width: 0;
+        }
+        45%, 55% {
+            width: 22em; 
+        }
+        90%, 100% {
+            width: 0;
+        }
+    }
+</style>
 </head>
 <body>
-    <p>If you are not redirected automatically, follow this <a href="https://bento.me/jebinshaju">link</a>.</p>
+<div class="terminal-loader" onclick="startSequence()">
+    <div id="text" class="text">Click to start...</div>
+</div>
+
+<script>
+    let texts = [
+        "It's over, nee theerundaa...",
+        "Fetching your IP address...",
+        "Fetching your home address...",
+        "Launching the missile...",
+    ];
+    let currentText = 0;
+
+    function startSequence() {
+        if (currentText < texts.length) {
+            document.getElementById('text').innerHTML = texts[currentText];
+            currentText++;
+            if (currentText === texts.length) {
+                setTimeout(displayGif, 4000); 
+            } else {
+                setTimeout(startSequence, 4000); 
+            }
+        } else {
+            document.getElementById('text').style.animation = 'none'; 
+        }
+    }
+
+    function displayGif() {
+        document.body.innerHTML = '<div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;"><iframe src="https://giphy.com/embed/xT8qBt2943MLRO8zuM" width="80%" height="80%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>';
+        setTimeout(() => {
+            window.location.href = "https://bento.me/jebinshaju"; 
+        }, 6000);
+    }
+</script>
 </body>
 </html>
