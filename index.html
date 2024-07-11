@@ -15,70 +15,168 @@
         font-family: 'Courier New', Courier, monospace;
     }
 
-    .terminal-loader {
+    .terminal {
         border: 0.1em solid #333;
         background-color: #1a1a1a;
         color: #0f0;
         padding: 1.5em 1em;
-        width: 350px;
+        width: 90%;
+        max-width: 600px;
+        height: 80%;
+        max-height: 400px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         border-radius: 4px;
         position: relative;
-        overflow: hidden;
+        overflow: auto;
+        white-space: pre-wrap;
+        box-sizing: border-box;
     }
 
-    .text {
-        white-space: nowrap;
-        overflow: hidden;
-        border-right: 0.2em solid green;
-        padding-right: 0.5em;
-        animation: typeAndDelete 4s steps(30) infinite, blinkCursor 0.75s step-end infinite alternate;
+    .command {
+        display: block;
+    }
+
+    .result {
+        color: #f00;
+    }
+
+    .terminal-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1.5em;
+        background-color: #333;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        padding: 0 0.4em;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .terminal-controls {
+        display: flex;
+    }
+
+    .control {
+        display: inline-block;
+        width: 0.6em;
+        height: 0.6em;
+        margin-left: 0.4em;
+        border-radius: 50%;
+        background-color: #777;
+    }
+
+    .control.close {
+        background-color: #e33;
+    }
+
+    .control.minimize {
+        background-color: #ee0;
+    }
+
+    .control.maximize {
+        background-color: #0b0;
+    }
+
+    .terminal-title {
+        line-height: 1.5em;
+        color: #eee;
     }
 
     @keyframes blinkCursor {
-        from { border-right-color: green; }
-        to { border-right-color: transparent; }
+        50% {
+            border-right-color: transparent;
+        }
     }
 
-    @keyframes typeAndDelete {
-        0%, 10% {
-            width: 0;
-        }
-        45%, 55% {
-            width: 22em; 
-        }
-        90%, 100% {
-            width: 0;
-        }
+    .blinking-cursor {
+        border-right: 0.2em solid green;
+        animation: blinkCursor 0.75s step-end infinite alternate;
+    }
+
+    #terminal-content {
+        margin-top: 2em;
     }
 </style>
 </head>
 <body>
-<div class="terminal-loader" onclick="startSequence()">
-    <div id="text" class="text">Click to start...</div>
+<div class="terminal">
+    <div class="terminal-header">
+        <div class="terminal-title">Terminal</div>
+        <div class="terminal-controls">
+            <div class="control close"></div>
+            <div class="control minimize"></div>
+            <div class="control maximize"></div>
+        </div>
+    </div>
+    <div id="terminal-content">
+        
+        <span id="text" class="blinking-cursor">jebinshaju@debian:: Initializing...</span>
+    </div>
 </div>
 
 <script>
-    let texts = [
-        "It's over, nee theerundaa...",
-        "Fetching your IP address...",
-        "Fetching your home address...",
-        "Launching the missile...",
+    let commands = [
+        {command: "echo It's over, nee theerundaa...", result: "It's over, nee theerundaa..."},
+        {command: "curl ifconfig.me", result: "2001:0db8:85a3:0000:0000:8a2e:0370:7334"}, // Example IP
+        {command: "curl ipinfo.io/2001:0db8:85a3:0000:0000:8a2e:0370:7334", result: "Fetched your home address"},
+        {command: "./launch_missile.sh", result: "Missile launched to your address...."},
     ];
-    let currentText = 0;
+    let currentCommand = 0;
+
+    window.onload = function() {
+        setTimeout(startSequence, 1000); // Start the sequence after a short delay
+    }
 
     function startSequence() {
-        if (currentText < texts.length) {
-            document.getElementById('text').innerHTML = texts[currentText];
-            currentText++;
-            if (currentText === texts.length) {
-                setTimeout(displayGif, 4000); 
-            } else {
-                setTimeout(startSequence, 4000); 
-            }
-        } else {
-            document.getElementById('text').style.animation = 'none'; 
+        if (currentCommand < commands.length) {
+            document.getElementById('text').classList.remove('blinking-cursor');
+            displayCommand(commands[currentCommand].command, () => {
+                displayResult(commands[currentCommand].result, () => {
+                    currentCommand++;
+                    if (currentCommand < commands.length) {
+                        document.getElementById('text').classList.add('blinking-cursor');
+                        setTimeout(startSequence, 2000);
+                    } else {
+                        setTimeout(displayGif, 4000);
+                    }
+                });
+            });
         }
+    }
+
+    function displayCommand(command, callback) {
+        let terminalContent = document.getElementById('terminal-content');
+        let commandElement = document.createElement('div');
+        commandElement.className = 'command';
+        terminalContent.appendChild(commandElement);
+        typeText(commandElement, command, callback);
+    }
+
+    function displayResult(result, callback) {
+        let terminalContent = document.getElementById('terminal-content');
+        let resultElement = document.createElement('div');
+        resultElement.className = 'result';
+        terminalContent.appendChild(resultElement);
+        typeText(resultElement, result, callback);
+    }
+
+    function typeText(element, text, callback) {
+        let index = 0;
+        function type() {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(type, 50);
+            } else {
+                element.innerHTML += '\n';
+                callback();
+            }
+        }
+        type();
     }
 
     function displayGif() {
