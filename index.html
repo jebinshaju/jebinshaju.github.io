@@ -120,14 +120,13 @@
 <script>
     let commands = [
         {command: "echo It's over, nee theerundaa...", result: "It's over, nee theerundaa..."},
-        {command: "curl ifconfig.me", result: "2001:0db8:85a3:0000:0000:8a2e:0370:7334"}, // Example IP
-        {command: "curl ipinfo.io/2001:0db8:85a3:0000:0000:8a2e:0370:7334", result: "Fetched your home address"},
+        {command: "curl ipinfo.io/2001:0db8:85a3:0000", result: "Fetched your home address"},
         {command: "./launch_missile.sh", result: "Missile launched to your address...."},
     ];
     let currentCommand = 0;
 
     window.onload = function() {
-        setTimeout(startSequence, 1000); // Start the sequence after a short delay
+        setTimeout(startSequence, 700); // Start the sequence after a short delay
     }
 
     function startSequence() {
@@ -138,9 +137,9 @@
                     currentCommand++;
                     if (currentCommand < commands.length) {
                         document.getElementById('text').classList.add('blinking-cursor');
-                        setTimeout(startSequence, 2000);
+                        setTimeout(startSequence, 1000);
                     } else {
-                        setTimeout(displayGif, 4000);
+                        setTimeout(displayGif, 3000);
                     }
                 });
             });
