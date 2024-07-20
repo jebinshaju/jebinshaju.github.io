@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>nee theernada</title>
+<title>Jebin Shaju :)</title>
 <style>
     body, html {
         height: 100%;
@@ -100,6 +100,57 @@
     #terminal-content {
         margin-top: 2em;
     }
+
+    button {
+        --glow-color: rgb(217, 176, 255);
+        --glow-spread-color: rgba(191, 123, 255, 0.781);
+        --enhanced-glow-color: rgb(231, 206, 255);
+        --btn-color: rgb(100, 61, 136);
+        border: .25em solid var(--glow-color);
+        padding: 1em 3em;
+        color: var(--glow-color);
+        font-size: 15px;
+        font-weight: bold;
+        background-color: var(--btn-color);
+        border-radius: 1em;
+        outline: none;
+        box-shadow: 0 0 1em .25em var(--glow-color),
+                    0 0 4em 1em var(--glow-spread-color),
+                    inset 0 0 .75em .25em var(--glow-color);
+        text-shadow: 0 0 .5em var(--glow-color);
+        position: relative;
+        transition: all 0.3s;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+    button::after {
+        pointer-events: none;
+        content: "";
+        position: absolute;
+        top: 120%;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: var(--glow-spread-color);
+        filter: blur(2em);
+        opacity: .7;
+        transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+    }
+
+    button:hover {
+        color: var(--btn-color);
+        background-color: var(--glow-color);
+        box-shadow: 0 0 1em .25em var(--glow-color),
+                    0 0 4em 2em var(--glow-spread-color),
+                    inset 0 0 .75em .25em var(--glow-color);
+    }
+
+    button:active {
+        box-shadow: 0 0 0.6em .25em var(--glow-color),
+                    0 0 2.5em 2em var(--glow-spread-color),
+                    inset 0 0 .5em .25em var(--glow-color);
+    }
 </style>
 </head>
 <body>
@@ -116,17 +167,20 @@
         <span id="text" class="blinking-cursor">jebinshaju@debian:: Initializing...</span>
     </div>
 </div>
+<div style="position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center;">
+    <button onclick="window.location.href='https://bento.me/jebinshaju'">I'm too old for this</button>
+</div>
 
 <script>
     let commands = [
         {command: "echo It's over, nee theerundaa...", result: "It's over, nee theerundaa..."},
-        {command: "curl ipinfo.io/2001:0db8:85a3:0000", result: "Fetched your home address"},
+        {command: "curl ipinfo.io/2001:0db8:85a3:0000", result: "Fetched your home address/coordinates"},
         {command: "./launch_missile.sh", result: "Missile launched to your address...."},
     ];
     let currentCommand = 0;
 
     window.onload = function() {
-        setTimeout(startSequence, 700); // Start the sequence after a short delay
+        setTimeout(startSequence, 350); // Start the sequence after a short delay
     }
 
     function startSequence() {
@@ -137,9 +191,9 @@
                     currentCommand++;
                     if (currentCommand < commands.length) {
                         document.getElementById('text').classList.add('blinking-cursor');
-                        setTimeout(startSequence, 1000);
+                        setTimeout(startSequence, 500);
                     } else {
-                        setTimeout(displayGif, 3000);
+                        setTimeout(displayGif, 1500);
                     }
                 });
             });
@@ -168,7 +222,7 @@
             if (index < text.length) {
                 element.innerHTML += text.charAt(index);
                 index++;
-                setTimeout(type, 50);
+                setTimeout(type, 25); // Typing speed doubled
             } else {
                 element.innerHTML += '\n';
                 callback();
@@ -181,7 +235,7 @@
         document.body.innerHTML = '<div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;"><iframe src="https://giphy.com/embed/xT8qBt2943MLRO8zuM" width="80%" height="80%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>';
         setTimeout(() => {
             window.location.href = "https://bento.me/jebinshaju"; 
-        }, 6000);
+        }, 6000); // Full duration of GIF before redirecting
     }
 </script>
 </body>
