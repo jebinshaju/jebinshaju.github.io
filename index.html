@@ -1,242 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jebin Shaju :)</title>
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Courier New', Courier, monospace;
-    }
-
-    .terminal {
-        border: 0.1em solid #333;
-        background-color: #1a1a1a;
-        color: #0f0;
-        padding: 1.5em 1em;
-        width: 90%;
-        max-width: 600px;
-        height: 80%;
-        max-height: 400px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 4px;
-        position: relative;
-        overflow: auto;
-        white-space: pre-wrap;
-        box-sizing: border-box;
-    }
-
-    .command {
-        display: block;
-    }
-
-    .result {
-        color: #f00;
-    }
-
-    .terminal-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1.5em;
-        background-color: #333;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-        padding: 0 0.4em;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .terminal-controls {
-        display: flex;
-    }
-
-    .control {
-        display: inline-block;
-        width: 0.6em;
-        height: 0.6em;
-        margin-left: 0.4em;
-        border-radius: 50%;
-        background-color: #777;
-    }
-
-    .control.close {
-        background-color: #e33;
-    }
-
-    .control.minimize {
-        background-color: #ee0;
-    }
-
-    .control.maximize {
-        background-color: #0b0;
-    }
-
-    .terminal-title {
-        line-height: 1.5em;
-        color: #eee;
-    }
-
-    @keyframes blinkCursor {
-        50% {
-            border-right-color: transparent;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jebin Shaju</title>
+    <style>
+        button {
+            --glow-color: rgb(217, 176, 255);
+            --glow-spread-color: rgba(191, 123, 255, 0.781);
+            --enhanced-glow-color: rgb(231, 206, 255);
+            --btn-color: rgb(100, 61, 136);
+            border: .25em solid var(--glow-color);
+            padding: 1em 3em;
+            color: var(--glow-color);
+            font-size: 15px;
+            font-weight: bold;
+            background-color: var(--btn-color);
+            border-radius: 1em;
+            outline: none;
+            box-shadow: 0 0 1em .25em var(--glow-color),
+                        0 0 4em 1em var(--glow-spread-color),
+                        inset 0 0 .75em .25em var(--glow-color);
+            text-shadow: 0 0 .5em var(--glow-color);
+            position: relative;
+            transition: all 0.3s;
+            margin-top: 20px;
+            cursor: pointer;
         }
-    }
 
-    .blinking-cursor {
-        border-right: 0.2em solid green;
-        animation: blinkCursor 0.75s step-end infinite alternate;
-    }
+        button::after {
+            pointer-events: none;
+            content: "";
+            position: absolute;
+            top: 120%;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: var(--glow-spread-color);
+            filter: blur(2em);
+            opacity: .7;
+            transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+        }
 
-    #terminal-content {
-        margin-top: 2em;
-    }
+        button:hover {
+            color: var(--btn-color);
+            background-color: var(--glow-color);
+            box-shadow: 0 0 1em .25em var(--glow-color),
+                        0 0 4em 2em var(--glow-spread-color),
+                        inset 0 0 .75em .25em var(--glow-color);
+        }
 
-    button {
-        --glow-color: rgb(217, 176, 255);
-        --glow-spread-color: rgba(191, 123, 255, 0.781);
-        --enhanced-glow-color: rgb(231, 206, 255);
-        --btn-color: rgb(100, 61, 136);
-        border: .25em solid var(--glow-color);
-        padding: 1em 3em;
-        color: var(--glow-color);
-        font-size: 15px;
-        font-weight: bold;
-        background-color: var(--btn-color);
-        border-radius: 1em;
-        outline: none;
-        box-shadow: 0 0 1em .25em var(--glow-color),
-                    0 0 4em 1em var(--glow-spread-color),
-                    inset 0 0 .75em .25em var(--glow-color);
-        text-shadow: 0 0 .5em var(--glow-color);
-        position: relative;
-        transition: all 0.3s;
-        margin-top: 20px;
-        cursor: pointer;
-    }
+        button:active {
+            box-shadow: 0 0 0.6em .25em var(--glow-color),
+                        0 0 2.5em 2em var(--glow-spread-color),
+                        inset 0 0 .5em .25em var(--glow-color);
+        }
 
-    button::after {
-        pointer-events: none;
-        content: "";
-        position: absolute;
-        top: 120%;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-color: var(--glow-spread-color);
-        filter: blur(2em);
-        opacity: .7;
-        transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
-    }
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', Courier, monospace;
+            color: #0f0;
+        }
 
-    button:hover {
-        color: var(--btn-color);
-        background-color: var(--glow-color);
-        box-shadow: 0 0 1em .25em var(--glow-color),
-                    0 0 4em 2em var(--glow-spread-color),
-                    inset 0 0 .75em .25em var(--glow-color);
-    }
+        .container {
+            background-color: #1a1a1a;
+            color: #0f0;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-sizing: border-box;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
 
-    button:active {
-        box-shadow: 0 0 0.6em .25em var(--glow-color),
-                    0 0 2.5em 2em var(--glow-spread-color),
-                    inset 0 0 .5em .25em var(--glow-color);
-    }
-</style>
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #0f0;
+        }
+
+        .section h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 5px;
+        }
+
+        .content p, .projects ul {
+            margin: 10px 0;
+        }
+
+        .projects ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #0f0;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .social-buttons {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .social-buttons button {
+            margin-top: 0; /* To remove extra margin */
+        }
+    </style>
 </head>
 <body>
-<div class="terminal">
-    <div class="terminal-header">
-        <div class="terminal-title">Terminal</div>
-        <div class="terminal-controls">
-            <div class="control close"></div>
-            <div class="control minimize"></div>
-            <div class="control maximize"></div>
+    <div class="container">
+        <div class="header">
+            <h1>Jebin Shaju</h1>
+        </div>
+
+        <div class="section">
+            <h2>Contact Information</h2>
+            <p><strong>Location:</strong> Thodupuzha, Kerala, India</p>
+            <p><strong>Phone:</strong> +91 7510447249</p>
+            <p><strong>Email:</strong> jebinshaju4@gmail.com</p>
+        </div>
+
+        <div class="section">
+            <h2>Education</h2>
+            <p>BTech in Computer Science and Engineering, Viswajyothi College of Engineering and Technology</p>
+        </div>
+
+        <div class="section">
+            <h2>Experience</h2>
+            <p>SDE Internship at FSH Design</p>
+            <p>Beta - Microsoft Learn Student Ambassador</p>
+            <p>MERN Internship at ICT Academy of Kerala</p>
+        </div>
+
+        <div class="section">
+            <h2>Skills</h2>
+            <p>Python, Flask, Fast API, JavaScript, React.js, MongoDB, Firebase, Node.js, SQL, HTML, CSS, Docker, Google Cloud, Azure</p>
+        </div>
+
+        <div class="section projects">
+            <h2>Projects</h2>
+            <ul>
+                <li>VivaVoce: Web application for real-time speech recognition-based examinations.</li>
+                <li>CaseCraker: AI-powered legal assistant for navigating Indian law.</li>
+                <li>Neural Style Transfer: React app applying artistic styles to images using CNNs.</li>
+                <li>SpendSence: Expense tracker app built with ReactJS.</li>
+                <li>Exoplanet Galaxy Name API: Flask-based API for exoplanet and galaxy details.</li>
+                <li>solveX: Python script for solving mathematical expressions using OCR.</li>
+                <li>SpaceElevator: Flutter-based app providing a glimpse into space travel.</li>
+                <li>Command Line Password Manager: Secure command-line application for password management.</li>
+            </ul>
+        </div>
+
+
+        <div class="links">
+            <a href="/secure">Want to know more ??</a>
         </div>
     </div>
-    <div id="terminal-content">
-        <span id="text" class="blinking-cursor">jebinshaju@debian:: Initializing...</span>
+
+    <div class="social-buttons">
+        <button onclick="window.location.href='https://bento.me/jebinshaju'">Socials</button>
     </div>
-</div>
-<div style="position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center;">
-    <button onclick="window.location.href='https://bento.me/jebinshaju'">I'm too old for this</button>
-</div>
-
-<script>
-    let commands = [
-        {command: "echo It's over, nee theerundaa...", result: "It's over, nee theerundaa..."},
-        {command: "curl ipinfo.io/2001:0db8:85a3:0000", result: "Fetched your home address/coordinates"},
-        {command: "./launch_missile.sh", result: "Missile launched to your address...."},
-    ];
-    let currentCommand = 0;
-
-    window.onload = function() {
-        setTimeout(startSequence, 350); // Start the sequence after a short delay
-    }
-
-    function startSequence() {
-        if (currentCommand < commands.length) {
-            document.getElementById('text').classList.remove('blinking-cursor');
-            displayCommand(commands[currentCommand].command, () => {
-                displayResult(commands[currentCommand].result, () => {
-                    currentCommand++;
-                    if (currentCommand < commands.length) {
-                        document.getElementById('text').classList.add('blinking-cursor');
-                        setTimeout(startSequence, 500);
-                    } else {
-                        setTimeout(displayGif, 1500);
-                    }
-                });
-            });
-        }
-    }
-
-    function displayCommand(command, callback) {
-        let terminalContent = document.getElementById('terminal-content');
-        let commandElement = document.createElement('div');
-        commandElement.className = 'command';
-        terminalContent.appendChild(commandElement);
-        typeText(commandElement, command, callback);
-    }
-
-    function displayResult(result, callback) {
-        let terminalContent = document.getElementById('terminal-content');
-        let resultElement = document.createElement('div');
-        resultElement.className = 'result';
-        terminalContent.appendChild(resultElement);
-        typeText(resultElement, result, callback);
-    }
-
-    function typeText(element, text, callback) {
-        let index = 0;
-        function type() {
-            if (index < text.length) {
-                element.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(type, 25); // Typing speed doubled
-            } else {
-                element.innerHTML += '\n';
-                callback();
-            }
-        }
-        type();
-    }
-
-    function displayGif() {
-        document.body.innerHTML = '<div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;"><iframe src="https://giphy.com/embed/xT8qBt2943MLRO8zuM" width="80%" height="80%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>';
-        setTimeout(() => {
-            window.location.href = "https://bento.me/jebinshaju"; 
-        }, 6000); // Full duration of GIF before redirecting
-    }
-</script>
 </body>
 </html>
