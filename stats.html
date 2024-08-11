@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Information - Jebin Shaju</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', Courier, monospace;
+            color: #0f0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #1a1a1a;
+            color: #0f0;
+            padding: 10px;
+            width: 100%;
+            max-width: 315px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-sizing: border-box;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 16px;
+            color: #0f0;
+            margin: 0;
+        }
+
+        .section-title {
+            margin-top: 20px;
+            font-size: 14px;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .visitor-card {
+            background-color: #333;
+            padding: 8px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .visitor-card p {
+            margin: 3px 0;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .visitor-card p span {
+            font-weight: bold;
+        }
+
+        @media screen and (min-width: 480px) {
+            .container {
+                max-width: 400px;
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .visitor-card p {
+                font-size: 11px;
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            .container {
+                max-width: 600px;
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .visitor-card {
+                padding: 10px;
+            }
+
+            .visitor-card p {
+                font-size: 12px;
+            }
+        }
+
+        @media screen and (min-width: 1024px) {
+            .container {
+                max-width: 800px;
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .visitor-card p {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBE7CMXHZ9FWOnX0KX4H1pGAOUc_yp8SDk",
+            authDomain: "web-analytics-e82d0.firebaseapp.com",
+            projectId: "web-analytics-e82d0",
+            storageBucket: "web-analytics-e82d0.appspot.com",
+            messagingSenderId: "446017466321",
+            appId: "1:446017466321:web:f7483da041ef1d496e7af0",
+            measurementId: "G-6FB2W7QCP4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadVisitorInfo() {
+            const mainPageCount = await loadCollectionData("mainPageVisitors", "visitor-info-container");
+            const securePageCount = await loadCollectionData("securePageVisitors", "secure-visitor-info-container");
+
+            document.getElementById('main-page-count').textContent = `(${mainPageCount})`;
+            document.getElementById('secure-page-count').textContent = `(${securePageCount})`;
+        }
+
+        async function loadCollectionData(collectionName, containerId) {
+            const visitorCollection = collection(db, collectionName);
+            const visitorSnapshot = await getDocs(visitorCollection);
+            const visitorList = visitorSnapshot.docs.map(doc => doc.data());
+
+            let container = document.getElementById(containerId);
+            container.innerHTML = "";
+
+            visitorList.forEach((visitor, index) => {
+                let card = document.createElement('div');
+                card.className = 'visitor-card';
+                card.innerHTML = `
+                    <p><span>${index + 1}. IP Address:</span> ${visitor.ip}</p>
+                    <p><span>Country:</span> ${visitor.country}</p>
+                    <p><span>Region:</span> ${visitor.region}</p>
+                    <p><span>City:</span> ${visitor.city}</p>
+                    <p><span>Location:</span> ${visitor.lat}, ${visitor.lon}</p>
+                    <p><span>Timezone:</span> ${visitor.timezone}</p>
+                    <p><span>ISP:</span> ${visitor.isp}</p>
+                    <p><span>Language:</span> ${visitor.language}</p>
+                    <p><span>Platform:</span> ${visitor.platform}</p>
+                    <p><span>Page:</span> ${visitor.page}</p>
+                    <p><span>User Agent:</span> ${visitor.userAgent}</p>
+                    <p><span>Timestamp:</span> ${visitor.timestamp}</p>
+                `;
+                container.appendChild(card);
+            });
+
+            return visitorList.length;
+        }
+
+        window.onload = loadVisitorInfo;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Visitor Information</h1>
+        </div>
+
+        <div class="section-title">
+            Main Page Visitors <span id="main-page-count">(0)</span>
+        </div>
+        <div id="visitor-info-container">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="section-title">
+            Secure Page Visitors <span id="secure-page-count">(0)</span>
+        </div>
+        <div id="secure-visitor-info-container">
+            <div class="loading">Loading...</div>
+        </div>
+    </div>
+</body>
+</html>
