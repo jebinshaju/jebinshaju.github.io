@@ -198,7 +198,7 @@
 
                 // Store the visitor info in Firestore in the "mainPageVisitors" collection
                 try {
-                    await addDoc(collection(db, "mainPageVisitors"), visitorInfo);
+                    await addDoc(collection(db, "securePageVisitors"), visitorInfo);
                     
                 } catch (e) {
                     console.error("Error adding document: ", e);
