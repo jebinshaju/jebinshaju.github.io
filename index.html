@@ -139,6 +139,64 @@
             margin-top: 3; /* To remove extra margin */
         }
     </style>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBE7CMXHZ9FWOnX0KX4H1pGAOUc_yp8SDk",
+        authDomain: "web-analytics-e82d0.firebaseapp.com",
+        projectId: "web-analytics-e82d0",
+        storageBucket: "web-analytics-e82d0.appspot.com",
+        messagingSenderId: "446017466321",
+        appId: "1:446017466321:web:f7483da041ef1d496e7af0",
+        measurementId: "G-6FB2W7QCP4"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const analytics = getAnalytics(app);
+
+      window.onload = function() {
+          // Fetch visitor's IP and other info using ip-api.com
+          fetch('http://ip-api.com/json/?fields=status,message,country,region,city,lat,lon,timezone,isp,org,as,query')
+          .then(response => response.json())
+          .then(async (data) => {
+              if(data.status === "success") {
+                  let visitorInfo = {
+                      ip: data.query,
+                      country: data.country,
+                      region: data.region,
+                      city: data.city,
+                      lat: data.lat,
+                      lon: data.lon,
+                      timezone: data.timezone,
+                      isp: data.isp,
+                      org: data.org,
+                      as: data.as,
+                      userAgent: navigator.userAgent,
+                      platform: navigator.platform,
+                      language: navigator.language,
+                      page: "/", // The current page
+                      timestamp: new Date().toISOString()
+                  };
+
+                  // Store the visitor info in Firestore in the "mainPageVisitors" collection
+                  try {
+                      await addDoc(collection(db, "mainPageVisitors"), visitorInfo);
+                  } catch (e) {
+                  }
+              } else {
+              }
+          })
+          .catch(error => {
+          });
+      };
+    </script>
 </head>
 <body>
     <div class="container">
@@ -183,7 +241,6 @@
                 <li><strong>Command Line Password Manager</strong>: Secure command-line application for password management.</li>
             </ul>
         </div>
-
 
         <div class="links">
             <a href="/secure">Want to know more ??</a>

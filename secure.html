@@ -152,36 +152,76 @@
                     inset 0 0 .5em .25em var(--glow-color);
     }
 </style>
-</head>
-<body>
-<div class="terminal">
-    <div class="terminal-header">
-        <div class="terminal-title">Terminal</div>
-        <div class="terminal-controls">
-            <div class="control close"></div>
-            <div class="control minimize"></div>
-            <div class="control maximize"></div>
-        </div>
-    </div>
-    <div id="terminal-content">
-        <span id="text" class="blinking-cursor">jebinshaju@debian:: Initializing...</span>
-    </div>
-</div>
-<div style="position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center;">
-    <button onclick="window.location.href='https://bento.me/jebinshaju'">I'm too old for this</button>
-</div>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
 
-<script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBE7CMXHZ9FWOnX0KX4H1pGAOUc_yp8SDk",
+      authDomain: "web-analytics-e82d0.firebaseapp.com",
+      projectId: "web-analytics-e82d0",
+      storageBucket: "web-analytics-e82d0.appspot.com",
+      messagingSenderId: "446017466321",
+      appId: "1:446017466321:web:f7483da041ef1d496e7af0",
+      measurementId: "G-6FB2W7QCP4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const analytics = getAnalytics(app);
+
+    window.onload = function() {
+        // Fetch visitor's IP and other info using ip-api.com
+        fetch('http://ip-api.com/json/?fields=status,message,country,region,city,lat,lon,timezone,isp,org,as,query')
+        .then(response => response.json())
+        .then(async (data) => {
+            if(data.status === "success") {
+                let visitorInfo = {
+                    ip: data.query,
+                    country: data.country,
+                    region: data.region,
+                    city: data.city,
+                    lat: data.lat,
+                    lon: data.lon,
+                    timezone: data.timezone,
+                    isp: data.isp,
+                    org: data.org,
+                    as: data.as,
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    page: "/", // The current page
+                    timestamp: new Date().toISOString()
+                };
+
+                // Store the visitor info in Firestore in the "mainPageVisitors" collection
+                try {
+                    await addDoc(collection(db, "mainPageVisitors"), visitorInfo);
+                    
+                } catch (e) {
+                    
+                }
+            } else {
+                
+            }
+        })
+        .catch(error => {
+            
+        });
+
+        setTimeout(startSequence, 350); // Start the sequence after a short delay
+    }
+
     let commands = [
         {command: "echo It's over, nee theerundaa...", result: "It's over, nee theerundaa..."},
         {command: "curl ipinfo.io/2001:0db8:85a3:0000", result: "Fetched your home address/coordinates"},
         {command: "./launch_missile.sh", result: "Missile launched to your address...."},
     ];
     let currentCommand = 0;
-
-    window.onload = function() {
-        setTimeout(startSequence, 350); // Start the sequence after a short delay
-    }
 
     function startSequence() {
         if (currentCommand < commands.length) {
@@ -238,5 +278,23 @@
         }, 6000); // Full duration of GIF before redirecting
     }
 </script>
+</head>
+<body>
+<div class="terminal">
+    <div class="terminal-header">
+        <div class="terminal-title">Terminal</div>
+        <div class="terminal-controls">
+            <div class="control close"></div>
+            <div class="control minimize"></div>
+            <div class="control maximize"></div>
+        </div>
+    </div>
+    <div id="terminal-content">
+        <span id="text" class="blinking-cursor">jebinshaju@debian:: Initializing...</span>
+    </div>
+</div>
+<div style="position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center;">
+    <button onclick="window.location.href='https://bento.me/jebinshaju'">I'm too old for this</button>
+</div>
 </body>
 </html>
