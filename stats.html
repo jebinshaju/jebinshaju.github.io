@@ -161,10 +161,23 @@
             const visitorSnapshot = await getDocs(visitorCollection);
             const visitorList = visitorSnapshot.docs.map(doc => doc.data());
 
+            // Sort the visitorList by timestamp in descending order (newest first)
+            visitorList.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
             let container = document.getElementById(containerId);
             container.innerHTML = "";
 
             visitorList.forEach((visitor, index) => {
+                const formattedTimestamp = new Date(visitor.timestamp).toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    hour12: true
+                });
+
                 let card = document.createElement('div');
                 card.className = 'visitor-card';
                 card.innerHTML = `
@@ -179,7 +192,7 @@
                     <p><span>Platform:</span> ${visitor.platform}</p>
                     <p><span>Page:</span> ${visitor.page}</p>
                     <p><span>User Agent:</span> ${visitor.userAgent}</p>
-                    <p><span>Timestamp:</span> ${visitor.timestamp}</p>
+                    <p><span>Timestamp:</span> ${formattedTimestamp}</p>
                 `;
                 container.appendChild(card);
             });
