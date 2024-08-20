@@ -7,10 +7,10 @@
     <title>Jebin Shaju</title>
     <style>
         button {
-            --glow-color: rgb(217, 176, 255);
-            --glow-spread-color: rgba(191, 123, 255, 0.781);
-            --enhanced-glow-color: rgb(231, 206, 255);
-            --btn-color: rgb(100, 61, 136);
+            --glow-color: #0f0; /* Change to match the green theme */
+            --glow-spread-color: rgba(15, 255, 15, 0.5); /* Softer green glow */
+            --enhanced-glow-color: #c7ffc7; /* Light green for enhanced glow */
+            --btn-color: #1a1a1a; /* Dark background to match the site's theme */
             border: .25em solid var(--glow-color);
             padding: 1em 3em;
             color: var(--glow-color);
@@ -134,10 +134,19 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            gap: 20px; /* Add space between buttons */
         }
 
         .social-buttons button {
-            margin-top: 3; /* To remove extra margin */
+            margin-top: 3px; /* Adjust margin */
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            button {
+                padding: 0.5em 2em; /* Reduce padding for smaller screens */
+                font-size: 12px; /* Smaller font size for better fit */
+            }
         }
     </style>
     <script type="module">
@@ -241,14 +250,11 @@
                 <li><strong>Command Line Password Manager</strong>: Secure command-line application for password management.</li>
             </ul>
         </div>
-
-        <div class="links">
-            <a href="/secure">Want to know more ??</a>
-        </div>
     </div>
 
     <div class="social-buttons">
         <button onclick="window.location.href='https://bento.me/jebinshaju'">Socials</button>
+        <button onclick="window.location.href='/about.html'">Want to know more?</button>
     </div>
 </body>
 </html>
