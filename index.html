@@ -1,158 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
     <title>Jebin Shaju</title>
     <style>
+      button {
+        --glow-color: #0f0; /* Change to match the green theme */
+        --glow-spread-color: rgba(15, 255, 15, 0.5); /* Softer green glow */
+        --enhanced-glow-color: #c7ffc7; /* Light green for enhanced glow */
+        --btn-color: #1a1a1a; /* Dark background to match the site's theme */
+        border: 0.25em solid var(--glow-color);
+        padding: 1em 3em;
+        color: var(--glow-color);
+        font-size: 15px;
+        font-weight: bold;
+        background-color: var(--btn-color);
+        border-radius: 1em;
+        outline: none;
+        box-shadow: 0 0 1em 0.25em var(--glow-color),
+          0 0 4em 1em var(--glow-spread-color),
+          inset 0 0 0.75em 0.25em var(--glow-color);
+        text-shadow: 0 0 0.5em var(--glow-color);
+        position: relative;
+        transition: all 0.3s;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+
+      button::after {
+        pointer-events: none;
+        content: "";
+        position: absolute;
+        top: 120%;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: var(--glow-spread-color);
+        filter: blur(2em);
+        opacity: 0.7;
+        transform: perspective(1.5em) rotateX(35deg) scale(1, 0.6);
+      }
+
+      button:hover {
+        color: var(--btn-color);
+        background-color: var(--glow-color);
+        box-shadow: 0 0 1em 0.25em var(--glow-color),
+          0 0 4em 2em var(--glow-spread-color),
+          inset 0 0 0.75em 0.25em var(--glow-color);
+      }
+
+      button:active {
+        box-shadow: 0 0 0.6em 0.25em var(--glow-color),
+          0 0 2.5em 2em var(--glow-spread-color),
+          inset 0 0 0.5em 0.25em var(--glow-color);
+      }
+      f body,
+      html {
+        height: 100%;
+        margin: 0;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Courier New", Courier, monospace;
+        color: #0f0;
+      }
+
+      .container {
+        background-color: #1a1a1a;
+        color: #0f0;
+        padding: 20px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        box-sizing: border-box;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      .section {
+        margin-bottom: 20px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 28px;
+        color: #0f0;
+      }
+
+      .section h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #0f0;
+        padding-bottom: 5px;
+      }
+
+      .content p,
+      .projects ul {
+        margin: 10px 0;
+      }
+
+      .projects ul {
+        list-style-type: disc;
+        padding-left: 20px;
+      }
+
+      .links {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .links a {
+        color: #0f0;
+        text-decoration: none;
+        display: block;
+        margin: 10px 0;
+      }
+
+      .links a:hover {
+        text-decoration: underline;
+      }
+
+      .social-buttons {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Add space between buttons */
+      }
+
+      .social-buttons button {
+        margin-top: 3px; /* Adjust margin */
+      }
+
+      /* Media query for smaller screens */
+      @media (max-width: 600px) {
         button {
-            --glow-color: #0f0; /* Change to match the green theme */
-            --glow-spread-color: rgba(15, 255, 15, 0.5); /* Softer green glow */
-            --enhanced-glow-color: #c7ffc7; /* Light green for enhanced glow */
-            --btn-color: #1a1a1a; /* Dark background to match the site's theme */
-            border: .25em solid var(--glow-color);
-            padding: 1em 3em;
-            color: var(--glow-color);
-            font-size: 15px;
-            font-weight: bold;
-            background-color: var(--btn-color);
-            border-radius: 1em;
-            outline: none;
-            box-shadow: 0 0 1em .25em var(--glow-color),
-                        0 0 4em 1em var(--glow-spread-color),
-                        inset 0 0 .75em .25em var(--glow-color);
-            text-shadow: 0 0 .5em var(--glow-color);
-            position: relative;
-            transition: all 0.3s;
-            margin-top: 20px;
-            cursor: pointer;
+          padding: 0.5em 2em; /* Reduce padding for smaller screens */
+          font-size: 12px; /* Smaller font size for better fit */
         }
-
-        button::after {
-            pointer-events: none;
-            content: "";
-            position: absolute;
-            top: 120%;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background-color: var(--glow-spread-color);
-            filter: blur(2em);
-            opacity: .7;
-            transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
-        }
-
-        button:hover {
-            color: var(--btn-color);
-            background-color: var(--glow-color);
-            box-shadow: 0 0 1em .25em var(--glow-color),
-                        0 0 4em 2em var(--glow-spread-color),
-                        inset 0 0 .75em .25em var(--glow-color);
-        }
-
-        button:active {
-            box-shadow: 0 0 0.6em .25em var(--glow-color),
-                        0 0 2.5em 2em var(--glow-spread-color),
-                        inset 0 0 .5em .25em var(--glow-color);
-        }
-
-        body, html {
-            height: 100%;
-            margin: 0;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Courier New', Courier, monospace;
-            color: #0f0;
-        }
-
-        .container {
-            background-color: #1a1a1a;
-            color: #0f0;
-            padding: 20px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            box-sizing: border-box;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .section {
-            margin-bottom: 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
-            color: #0f0;
-        }
-
-        .section h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #0f0;
-            padding-bottom: 5px;
-        }
-
-        .content p, .projects ul {
-            margin: 10px 0;
-        }
-
-        .projects ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-
-        .links {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .links a {
-            color: #0f0;
-            text-decoration: none;
-            display: block;
-            margin: 10px 0;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-        .social-buttons {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 20px; /* Add space between buttons */
-        }
-
-        .social-buttons button {
-            margin-top: 3px; /* Adjust margin */
-        }
-
-        /* Media query for smaller screens */
-        @media (max-width: 600px) {
-            button {
-                padding: 0.5em 2em; /* Reduce padding for smaller screens */
-                font-size: 12px; /* Smaller font size for better fit */
-            }
-        }
+      }
     </style>
     <script type="module">
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
 
       // Your web app's Firebase configuration
@@ -163,7 +171,7 @@
         storageBucket: "web-analytics-e82d0.appspot.com",
         messagingSenderId: "446017466321",
         appId: "1:446017466321:web:f7483da041ef1d496e7af0",
-        measurementId: "G-6FB2W7QCP4"
+        measurementId: "G-6FB2W7QCP4",
       };
 
       // Initialize Firebase
@@ -171,90 +179,123 @@
       const db = getFirestore(app);
       const analytics = getAnalytics(app);
 
-      window.onload = function() {
-          // Fetch visitor's IP and other info using ipinfo.io
-          fetch('https://ipinfo.io/json?token=679d897e25a903')
-          .then(response => response.json())
+      window.onload = function () {
+        // Fetch visitor's IP and other info using ipinfo.io
+        fetch("https://ipinfo.io/json?token=679d897e25a903")
+          .then((response) => response.json())
           .then(async (data) => {
-              if (data) {
-                  let visitorInfo = {
-                      ip: data.ip,
-                      country: data.country,
-                      region: data.region,
-                      city: data.city,
-                      lat: data.loc.split(',')[0],
-                      lon: data.loc.split(',')[1],
-                      timezone: data.timezone,
-                      isp: data.org,
-                      userAgent: navigator.userAgent,
-                      platform: navigator.platform,
-                      language: navigator.language,
-                      page: "/", // The current page
-                      timestamp: new Date().toISOString()
-                  };
+            if (data) {
+              let visitorInfo = {
+                ip: data.ip,
+                country: data.country,
+                region: data.region,
+                city: data.city,
+                lat: data.loc.split(",")[0],
+                lon: data.loc.split(",")[1],
+                timezone: data.timezone,
+                isp: data.org,
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                page: "/", // The current page
+                timestamp: new Date().toISOString(),
+              };
 
-                  // Store the visitor info in Firestore in the "mainPageVisitors" collection
-                  try {
-                      await addDoc(collection(db, "mainPageVisitors"), visitorInfo);
-                  } catch (e) {
-                      console.error("Error adding document: ", e);
-                  }
+              // Store the visitor info in Firestore in the "mainPageVisitors" collection
+              try {
+                await addDoc(collection(db, "mainPageVisitors"), visitorInfo);
+              } catch (e) {
+                console.error("Error adding document: ", e);
               }
+            }
           })
-          .catch(error => {
-              console.error("Error fetching IP information: ", error);
+          .catch((error) => {
+            console.error("Error fetching IP information: ", error);
           });
       };
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <h1>Jebin Shaju</h1>
-        </div>
+      <div class="header">
+        <h1>Jebin Shaju</h1>
+      </div>
 
-        <div class="section">
-            <h2>Contact Information</h2>
-            <p><strong>Location:</strong> Thodupuzha, Kerala, India</p>
-            <p><strong>Phone:</strong> +91 7510447249</p>
-            <p><strong>Email:</strong> jebinshaju4@gmail.com</p>
-        </div>
+      <div class="section">
+        <h2>Contact Information</h2>
+        <p><strong>Location:</strong> Thodupuzha, Kerala, India</p>
+        <p><strong>Phone:</strong> +91 7510447249</p>
+        <p><strong>Email:</strong> jebinshaju4@gmail.com</p>
+      </div>
 
-        <div class="section">
-            <h2>Education</h2>
-            <p>BTech in Computer Science and Engineering, Viswajyothi College of Engineering and Technology</p>
-        </div>
+      <div class="section">
+        <h2>Education</h2>
+        <p>
+          BTech in Computer Science and Engineering, Viswajyothi College of
+          Engineering and Technology
+        </p>
+      </div>
 
-        <div class="section">
-            <h2>Experience</h2>
-            <p>SDE Internship at FSH Design</p>
-            <p>Beta - Microsoft Learn Student Ambassador</p>
-            <p>MERN Internship at ICT Academy of Kerala</p>
-        </div>
+      <div class="section">
+        <h2>Experience</h2>
+        <p>SDE Internship at FSH Design</p>
+        <p>Beta - Microsoft Learn Student Ambassador</p>
+        <p>MERN Internship at ICT Academy of Kerala</p>
+      </div>
 
-        <div class="section">
-            <h2>Skills</h2>
-            <p>Python, Flask, Fast API, JavaScript, React.js, MongoDB, Firebase, Node.js, SQL, HTML, CSS, Docker, Google Cloud, Azure</p>
-        </div>
+      <div class="section">
+        <h2>Skills</h2>
+        <p>
+          Python, Flask, Fast API, JavaScript, React.js, MongoDB, Firebase,
+          Node.js, SQL, HTML, CSS, Docker, Google Cloud, Azure
+        </p>
+      </div>
 
-        <div class="section projects">
-            <h2>Projects</h2>
-            <ul>
-                <li> <strong>VivaVoce</strong> : Web application for real-time speech recognition-based examinations.</li>
-                <li><strong>CaseCraker</strong>: AI-powered legal assistant for navigating Indian law.</li>
-                <li><strong>Neural Style Transfer</strong>: React app applying artistic styles to images using CNNs.</li>
-                <li><strong>SpendSence</strong>: Expense tracker app built with ReactJS.</li>
-                <li><strong>Exoplanet Galaxy Name API</strong>: Flask-based API for exoplanet and galaxy details.</li>
-                <li><strong>solveX</strong>: Python script for solving mathematical expressions using OCR.</li>
-                <li><strong>SpaceElevator</strong>: Flutter-based app providing a glimpse into space travel.</li>
-                <li><strong>Command Line Password Manager</strong>: Secure command-line application for password management.</li>
-            </ul>
-        </div>
+      <div class="section projects">
+        <h2>Projects</h2>
+        <ul>
+          <li>
+            <strong>VivaVoce</strong> : Web application for real-time speech
+            recognition-based examinations.
+          </li>
+          <li>
+            <strong>CaseCraker</strong>: AI-powered legal assistant for
+            navigating Indian law.
+          </li>
+          <li>
+            <strong>Neural Style Transfer</strong>: React app applying artistic
+            styles to images using CNNs.
+          </li>
+          <li>
+            <strong>SpendSence</strong>: Expense tracker app built with ReactJS.
+          </li>
+          <li>
+            <strong>Exoplanet Galaxy Name API</strong>: Flask-based API for
+            exoplanet and galaxy details.
+          </li>
+          <li>
+            <strong>solveX</strong>: Python script for solving mathematical
+            expressions using OCR.
+          </li>
+          <li>
+            <strong>SpaceElevator</strong>: Flutter-based app providing a
+            glimpse into space travel.
+          </li>
+          <li>
+            <strong>Command Line Password Manager</strong>: Secure command-line
+            application for password management.
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="social-buttons">
-        <button onclick="window.location.href='https://bento.me/jebinshaju'">Socials</button>
-        <button onclick="window.location.href='/about.html'">Want to know more?</button>
+      <button onclick="window.location.href='https://bento.me/jebinshaju'">
+        Socials
+      </button>
+      <button onclick="window.location.href='/about.html'">
+        Want to know more?
+      </button>
     </div>
-</body>
+  </body>
 </html>

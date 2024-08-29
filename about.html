@@ -152,6 +152,25 @@
                     inset 0 0 .5em .25em var(--glow-color);
     }
 </style>
+</head>
+<body>
+<div class="terminal">
+    <div class="terminal-header">
+        <div class="terminal-title">Terminal</div>
+        <div class="terminal-controls">
+            <div class="control close"></div>
+            <div class="control minimize"></div>
+            <div class="control maximize"></div>
+        </div>
+    </div>
+    <div id="terminal-content">
+        <span id="text" class="blinking-cursor">jebinshaju@debian:: Initializing...</span>
+    </div>
+</div>
+<div style="position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center;">
+    <button onclick="window.location.href='index.html'">I'm too old for this</button>
+</div>
+
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
@@ -174,7 +193,14 @@
     const db = getFirestore(app);
     const analytics = getAnalytics(app);
 
-    window.onload = function() {
+    // Background music
+    const backgroundMusic = new Audio('funkybass2gmin-96744.mp3');
+    backgroundMusic.loop = true;  // Loop the music
+
+    // Play the background music automatically
+    document.addEventListener('DOMContentLoaded', () => {
+        backgroundMusic.play().catch(error => console.error('Error playing music:', error)); 
+
         // Fetch visitor's IP and other info using ipinfo.io
         fetch('https://ipinfo.io/json?token=679d897e25a903')
         .then(response => response.json())
@@ -212,7 +238,7 @@
         });
 
         setTimeout(startSequence, 350); // Start the sequence after a short delay
-    }
+    });
 
     let commands = [
         {command: "echo It's over, nee theerundaa...", result: "It's over, nee theerundaa..."},
@@ -270,29 +296,23 @@
     }
 
     function displayGif() {
-        document.body.innerHTML = '<div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;"><iframe src="https://giphy.com/embed/xT8qBt2943MLRO8zuM" width="80%" height="80%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>';
+        // Stop background music
+        backgroundMusic.pause();
+        backgroundMusic.currentTime = 0;
+
+        document.body.innerHTML = `
+            <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;">
+                <img src="xT8qBt2943MLRO8zuM.webp" width="80%" height="80%" style="position:absolute"/>
+            </div>`;
+        
+        // Play explosion sound
+        const explosionSound = new Audio('explotion.mp3');  // Fixed typo in filename
+        explosionSound.play().catch(error => console.error('Error playing explosion sound:', error)); 
+
         setTimeout(() => {
-            window.location.href = "https://bento.me/jebinshaju"; 
+            window.location.href = "index.html"; 
         }, 6000); // Full duration of GIF before redirecting
     }
 </script>
-</head>
-<body>
-<div class="terminal">
-    <div class="terminal-header">
-        <div class="terminal-title">Terminal</div>
-        <div class="terminal-controls">
-            <div class="control close"></div>
-            <div class="control minimize"></div>
-            <div class="control maximize"></div>
-        </div>
-    </div>
-    <div id="terminal-content">
-        <span id="text" class="blinking-cursor">jebinshaju@debian:: Initializing...</span>
-    </div>
-</div>
-<div style="position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center;">
-    <button onclick="window.location.href='https://bento.me/jebinshaju'">I'm too old for this</button>
-</div>
 </body>
 </html>
