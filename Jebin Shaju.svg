@@ -1,21 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Parallax Animation Example</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="banner">
-        <div class="bg-before"></div>
-        <div class="bg-after"></div>
-        <div class="title">
-            <!-- Your SVG or other content here -->
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                 width="100%" viewBox="0 0 6912 3456" enable-background="new 0 0 6912 3456" xml:space="preserve">
-                <!-- Your SVG paths -->
-                <!-- ... (SVG content from your code) ... -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="100%" viewBox="0 0 6912 3456" enable-background="new 0 0 6912 3456" xml:space="preserve">
 <path fill="#000000" opacity="0.000000" stroke="none" 
 	d="
 M4744.000000,3460.000000 
@@ -704,7 +688,7 @@ M5851.229004,1275.291504
 	C5911.111816,1379.354736 5860.643555,1340.295410 5852.027344,1285.068359 
 	C5851.617188,1282.443237 5851.551270,1279.764526 5851.229004,1275.291504 
 z"/>
-<path fill="#030303" opacity="0.000000" stroke="none" 
+<path fill="#030303" opacity="1.000000" stroke="none" 
 	d="
 M5165.832031,1905.668091 
 	C5185.538086,1843.988525 5204.579590,1783.756958 5223.741211,1723.563599 
@@ -722,7 +706,7 @@ M5165.832031,1905.668091
 	C5133.408203,2016.955200 5135.719727,1999.891602 5141.041016,1983.177979 
 	C5149.109863,1957.832520 5157.156738,1932.480225 5165.832031,1905.668091 
 z"/>
-<path fill="#060606" opacity="0.000000" stroke="none" 
+<path fill="#060606" opacity="1.000000" stroke="none" 
 	d="
 M5293.126953,2477.512207 
 	C5289.996094,2448.828613 5301.282715,2428.311523 5322.289062,2412.184814 
@@ -735,7 +719,7 @@ M5293.126953,2477.512207
 	C5351.062500,2506.932617 5342.990723,2508.126221 5335.129395,2508.248047 
 	C5311.926758,2508.607910 5302.068848,2501.384521 5293.126953,2477.512207 
 z"/>
-<path fill="#040404" opacity="0.000000" stroke="none" 
+<path fill="#040404" opacity="1.000000" stroke="none" 
 	d="
 M1645.756958,1969.598877 
 	C1653.398560,1981.458496 1660.268921,1992.029907 1667.281372,2002.819946 
@@ -754,7 +738,7 @@ M1645.756958,1969.598877
 	C1659.463135,1793.468872 1619.958740,1860.172974 1629.994019,1920.951294 
 	C1632.730347,1937.523926 1637.524170,1953.303955 1645.756958,1969.598877 
 z"/>
-<path fill="#050505" opacity="0.000000" stroke="none" 
+<path fill="#050505" opacity="1.000000" stroke="none" 
 	d="
 M1126.582275,1779.721436 
 	C1092.793213,1787.657593 1061.847046,1784.453125 1031.198608,1769.808350 
@@ -766,73 +750,3 @@ M1126.582275,1779.721436
 	C1190.499390,1715.559814 1178.415771,1763.982666 1126.582275,1779.721436 
 z"/>
 </svg>
-            <!-- Buttons added below -->
-            <div class="buttons">
-                <a href="https://bento.me/jebinshaju" class="btn">Socials</a>
-                <a href="about.html" class="btn">Want to Know More?</a>
-            </div>
-        </div>
-    </div>
-	<script type="module">
-		// Import the functions you need from the SDKs you need
-		import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-		import {
-		  getFirestore,
-		  collection,
-		  addDoc,
-		} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-		import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
-  
-		// Your web app's Firebase configuration
-		const firebaseConfig = {
-		  apiKey: "AIzaSyBE7CMXHZ9FWOnX0KX4H1pGAOUc_yp8SDk",
-		  authDomain: "web-analytics-e82d0.firebaseapp.com",
-		  projectId: "web-analytics-e82d0",
-		  storageBucket: "web-analytics-e82d0.appspot.com",
-		  messagingSenderId: "446017466321",
-		  appId: "1:446017466321:web:f7483da041ef1d496e7af0",
-		  measurementId: "G-6FB2W7QCP4",
-		};
-  
-		// Initialize Firebase
-		const app = initializeApp(firebaseConfig);
-		const db = getFirestore(app);
-		const analytics = getAnalytics(app);
-  
-		window.onload = function () {
-		  // Fetch visitor's IP and other info using ipinfo.io
-		  fetch("https://ipinfo.io/json?token=679d897e25a903")
-			.then((response) => response.json())
-			.then(async (data) => {
-			  if (data) {
-				let visitorInfo = {
-				  ip: data.ip,
-				  country: data.country,
-				  region: data.region,
-				  city: data.city,
-				  lat: data.loc.split(",")[0],
-				  lon: data.loc.split(",")[1],
-				  timezone: data.timezone,
-				  isp: data.org,
-				  userAgent: navigator.userAgent,
-				  platform: navigator.platform,
-				  language: navigator.language,
-				  page: "/", // The current page
-				  timestamp: new Date().toISOString(),
-				};
-  
-				// Store the visitor info in Firestore in the "mainPageVisitors" collection
-				try {
-				  await addDoc(collection(db, "mainPageVisitors"), visitorInfo);
-				} catch (e) {
-				  console.error("Error adding document: ", e);
-				}
-			  }
-			})
-			.catch((error) => {
-			  console.error("Error fetching IP information: ", error);
-			});
-		};
-	  </script>
-</body>
-</html>
